@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="CutCounter">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../USERDIR/common/CutCounter/out/artifacts/CutCounter_jar/CutCounter.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

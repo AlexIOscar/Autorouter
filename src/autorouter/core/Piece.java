@@ -1,4 +1,5 @@
-import Elements.IElement;
+package autorouter.core;
+import elements.Element;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,13 +15,17 @@ public class Piece {
 
 
     // основное здесь - набор элементов, составляющих деталь
-    Set<IElement> elementList = new HashSet<>();
 
-    public void addElement(IElement element){
+    Set<Element> elementList = new HashSet<>();
+    public void addElement(Element element){
         elementList.add(element);
     }
 
-    public void removeElement(IElement el){
+    public void removeElement(Element el){
         elementList.remove(el);
+    }
+
+    public Set<Element> getElementList() {
+        return elementList;
     }
 }

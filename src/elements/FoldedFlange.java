@@ -1,16 +1,16 @@
-package Elements;
+package elements;
 
 import java.util.ArrayList;
 import java.util.List;
 
-// класс элемента "изгиб"
-public class Bend implements IElement {
+// элемент "смалковка"/"размалковка", по сути - отгиб полки вокруг оси элемента
+public class FoldedFlange implements Element {
 
-    public List<Class<? extends IElement>> getNecessaryList() {
+    public List<Class<? extends Element>> getNecessaryList() {
         return necessaryList;
     }
 
-    private static final List<Class<? extends IElement>> necessaryList = new ArrayList<>();
+    private static final List<Class<? extends Element>> necessaryList = new ArrayList<>();
 
     static {
         necessaryList.add(Contour.class);

@@ -1,11 +1,13 @@
-import Elements.IElement;
+package autorouter.core;
+
+import elements.Element;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-// расширение базового класса GraphBuilder. здесь реализована более "умная" и логичная модель
+// расширение базового класса autorouter.core.GraphBuilder. здесь реализована более "умная" и логичная модель
 // построения графа
 public class ExtGraphBuilder extends GraphBuilder {
 
@@ -18,7 +20,7 @@ public class ExtGraphBuilder extends GraphBuilder {
     // generateBranchesForTwin
     @Override
     public void generateGraph() {
-        List<IElement> localElList = new ArrayList<>(piece.elementList);
+        List<Element> localElList = new ArrayList<>(piece.elementList);
         for (int i = 0; i < localElList.size(); i++) {
             for (int j = i + 1; j < localElList.size(); j++) {
                 generateBranchesForTwin(localElList.get(i), localElList.get(j));
@@ -30,7 +32,7 @@ public class ExtGraphBuilder extends GraphBuilder {
     // построения между ними ребер графа. Собственно, исходов его работы может быть четыре: не
     // добавлено ни одного ребра, добавлены ребра в обоих направлениях, добавлено ребро только
     // el1 -> el2, либо только el2 -> el1
-    private void generateBranchesForTwin(IElement el1, IElement el2) {
+    private void generateBranchesForTwin(Element el1, Element el2) {
         if (checkNessRelation(el2, el1)) graph.add(new GraphBranch(el2, el1));
         if (checkNessRelation(el1, el2)) graph.add(new GraphBranch(el1, el2));
     }
@@ -39,7 +41,7 @@ public class ExtGraphBuilder extends GraphBuilder {
     // ребро провести нужно, то возврат true, если ребро не нужно - то false. Вся суть анализа -
     // проверка различных условий относительно "типичных" видов наборов предшественников
     // (поддеревьев), генераторы которых собраны ниже в специальных методах
-    private boolean checkNessRelation(IElement from, IElement to) {
+    private boolean checkNessRelation(Element from, Element to) {
 
         boolean result;
 
@@ -64,9 +66,9 @@ public class ExtGraphBuilder extends GraphBuilder {
 
     // генератор набора, включающего все элементы-предшественники первого поколения, которые есть у
     // элемента-аргумента
-    private Set<IElement> getDraftCloseNess(IElement el) {
-        Set<IElement> result = new HashSet<>();
-        for (IElement e0 : piece.elementList) {
+    private Set<Element> getDraftCloseNess(Element el) {
+        Set<Element> result = new HashSet<>();
+        for (Element e0 : piece.elementList) {
             if (checkNecessity(el, e0)) {
                 result.add(e0);
             }
@@ -75,12 +77,12 @@ public class ExtGraphBuilder extends GraphBuilder {
     }
 
     // генератор набора, включающего элементы предшественники всех поколений
-    private Set<IElement> getFullNessTree(IElement el) {
-        Set<IElement> result = getDraftCloseNess(el);
-        Set<IElement> buf = new HashSet<>(result);
-        Set<IElement> buf2 = new HashSet<>();
+    private Set<Element> getFullNessTree(Element el) {
+        Set<Element> result = getDraftCloseNess(el);
+        Set<Element> buf = new HashSet<>(result);
+        Set<Element> buf2 = new HashSet<>();
         while (buf.size() > 0) {
-            for (IElement elem : buf) {
+            for (Element elem : buf) {
                 result.addAll(getDraftCloseNess(elem));
                 buf2.addAll(getDraftCloseNess(elem));
             }
@@ -93,8 +95,8 @@ public class ExtGraphBuilder extends GraphBuilder {
 
     //не используется
     //генератор набора, содержащего элементы-предшественники поколений 2 и выше (все, кроме первого)
-    private Set<IElement> getFarNessTree(IElement el) {
-        Set<IElement> result = getFullNessTree(el);
+    private Set<Element> getFarNessTree(Element el) {
+        Set<Element> result = getFullNessTree(el);
         result.removeAll(getPureCloseNess(el));
         return result;
     }
@@ -102,13 +104,13 @@ public class ExtGraphBuilder extends GraphBuilder {
     // генератор набора, включающего элементы-предшественники первого поколения, не являющиеся
     // одновременно предшественниками других элементов предшественников первого поколения
     // элемента el
-    private Set<IElement> getPureCloseNess(IElement el) {
-        Set<IElement> close = getDraftCloseNess(el);
-        Set<IElement> farForAll = new HashSet<>();
-        for (IElement elem : close) {
+    private Set<Element> getPureCloseNess(Element el) {
+        Set<Element> close = getDraftCloseNess(el);
+        Set<Element> farForAll = new HashSet<>();
+        for (Element elem : close) {
             farForAll.addAll(getFullNessTree(elem));
         }
-        for (IElement elem : farForAll) {
+        for (Element elem : farForAll) {
             close.remove(elem);
         }
         return close;

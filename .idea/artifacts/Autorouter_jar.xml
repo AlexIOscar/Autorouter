@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact name="Autorouter:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Autorouter_jar</output-path>
+    <root id="root">
+      <element id="archive" name="Autorouter.jar">
+        <element id="module-output" name="Autorouter" />
+      </element>
+      <element id="library" level="project" name="DStV tasks" />
+      <element id="library" level="project" name="CutCounter" />
+    </root>
+  </artifact>
+</component>

@@ -1,8 +1,6 @@
-import Auxillary.ContourSolver;
-import Elements.*;
+package autorouter.core;
 
-import java.util.function.Consumer;
-
+import elements.*;
 
 //класс-запускатор, тестируем всё здесь
 public class Starter {
@@ -21,7 +19,7 @@ public class Starter {
         System.out.println(gb.graph.size());
         gb.printGraph();
 
-/**
+/*
  Contour testCont = new Contour();
  List<PlasmPoint> lpp = new ArrayList<>();
  lpp.add(new PlasmPoint(0f,0f,0f,0));
@@ -35,10 +33,5 @@ public class Starter {
  testCont.setPointList(lpp);
  System.out.println(ContourSolver.isConvexNGon(testCont));
  */
-
     }
-}
-
-interface Func{
-    void dosmth(int value);
 }

@@ -1,16 +1,16 @@
-package Elements;
+package elements;
 
 import java.util.ArrayList;
 import java.util.List;
 
-// элемент "маркировка"
-public class Mark implements IElement {
+// класс элемента "изгиб"
+public class Bend implements Element {
 
-    public List<Class<? extends IElement>> getNecessaryList() {
+    public List<Class<? extends Element>> getNecessaryList() {
         return necessaryList;
     }
 
-    private static final List<Class<? extends IElement>> necessaryList = new ArrayList<>();
+    private static final List<Class<? extends Element>> necessaryList = new ArrayList<>();
 
     static {
         necessaryList.add(Contour.class);
@@ -18,5 +18,6 @@ public class Mark implements IElement {
         necessaryList.add(TechHole.class);
         necessaryList.add(Slot.class);
         necessaryList.add(Butt.class);
+        necessaryList.add(Mark.class);
     }
 }

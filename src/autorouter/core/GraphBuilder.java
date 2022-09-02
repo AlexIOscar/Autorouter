@@ -1,4 +1,6 @@
-import Elements.IElement;
+package autorouter.core;
+
+import elements.Element;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -6,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-// базовый построитель графа, более слабый чем ExtGraphBuilder, и при этом более сложный и менее
+// базовый построитель графа, более слабый чем autorouter.core.ExtGraphBuilder, и при этом более сложный и менее
 // логичный.
 public class GraphBuilder {
 
@@ -23,8 +25,8 @@ public class GraphBuilder {
     }
 
     private void addMonoBranches() {
-        for (IElement e0 : piece.elementList) {
-            for (IElement e1 : piece.elementList) {
+        for (Element e0 : piece.elementList) {
+            for (Element e1 : piece.elementList) {
                 if (checkNecessity(e0, e1)) {
                     graph.add(new GraphBranch(e1, e0));
                 }
@@ -35,8 +37,8 @@ public class GraphBuilder {
     //добавить ветки графа в обе стороны
     @Deprecated
     private void addTwinBranches() {
-        for (IElement e0 : piece.elementList) {
-            for (IElement e1 : piece.elementList) {
+        for (Element e0 : piece.elementList) {
+            for (Element e1 : piece.elementList) {
                 if (getLinkedKnots(e0, graph) == getLinkedKnots(e1, graph)) {
                     //нужны еще проверки какие-то, сейчас все работает через жопу
                     graph.add(new GraphBranch(e1, e0));
@@ -46,11 +48,11 @@ public class GraphBuilder {
         }
     }
 
-    protected boolean checkNecessity(IElement nessListOwner, IElement chekedElem) {
+    protected boolean checkNecessity(Element nessListOwner, Element chekedElem) {
         // входит ли элемент chekedElem в лист потребностей элемента nessListOwner?
-        Class<? extends IElement> class1 = chekedElem.getClass();
-        List<Class<? extends IElement>> necessaryList = nessListOwner.getNecessaryList();
-        for (Class<? extends IElement> el : necessaryList) {
+        Class<? extends Element> class1 = chekedElem.getClass();
+        List<Class<? extends Element>> necessaryList = nessListOwner.getNecessaryList();
+        for (Class<? extends Element> el : necessaryList) {
             if (class1 == el) return true;
         }
         return false;
@@ -64,26 +66,26 @@ public class GraphBuilder {
     }
 
     private void removeBranches() {
-        for (IElement el : piece.elementList) {
+        for (Element el : piece.elementList) {
             checkCollideAndRemove(el);
         }
     }
 
     // метод проверяет, есть ли в "дереве нужд" el такой элемент, который одновременно есть и в
     // нуждах "первого поколения" (непосредственных) узла el
-    private void checkCollideAndRemove(IElement el) {
+    private void checkCollideAndRemove(Element el) {
         //лист "непосредственных нужд":
-        List<IElement> nessList = getLinkedKnots(el, graph);
+        List<Element> nessList = getLinkedKnots(el, graph);
 
         //лист нужд "высших поколений", заполняем его, вызывая getNessTree для каждого элемента в
         // nessList:
-        Set<IElement> collected = new HashSet<>();
-        for (IElement nessEl : nessList) {
+        Set<Element> collected = new HashSet<>();
+        for (Element nessEl : nessList) {
             getNessTree(nessEl, collected);
         }
 
-        for (IElement elem : collected) {
-            for (IElement el2 : nessList) {
+        for (Element elem : collected) {
+            for (Element el2 : nessList) {
                 if (elem == el2) {
                     removeBranch(elem, el);
                 }
@@ -92,10 +94,10 @@ public class GraphBuilder {
     }
 
     // для элемента element все его нужды, включая нужды "высших поколений", помещаются в collected
-    private void getNessTree(IElement element, Set<IElement> collected) {
-        List<IElement> graphField = getLinkedKnots(element, graph);
+    private void getNessTree(Element element, Set<Element> collected) {
+        List<Element> graphField = getLinkedKnots(element, graph);
         collected.addAll(graphField);
-        for (IElement el : graphField
+        for (Element el : graphField
         ) {
             getNessTree(el, collected);
         }
@@ -103,9 +105,9 @@ public class GraphBuilder {
 
     // метод, возвращающий для элемента sender и графа gbList список элементов-нужд "первого
     // поколения"
-    private List<IElement> getLinkedKnots(IElement sender, List<GraphBranch> gbList) {
+    private List<Element> getLinkedKnots(Element sender, List<GraphBranch> gbList) {
         List<GraphBranch> grBr = getFilteredBranches(sender, gbList);
-        List<IElement> upList = new ArrayList<>();
+        List<Element> upList = new ArrayList<>();
         for (GraphBranch gb : grBr) {
             upList.add(gb.getFromEl());
         }
@@ -113,12 +115,12 @@ public class GraphBuilder {
     }
 
     //метод возвращает только те ветви графа graph, которые "указывают" на узел sender
-    private List<GraphBranch> getFilteredBranches(IElement sender, List<GraphBranch> graph) {
+    private List<GraphBranch> getFilteredBranches(Element sender, List<GraphBranch> graph) {
         return graph.stream().filter(t -> t.getToEl() == sender).collect(Collectors.toList());
     }
 
     //удаляет из графа ветку, идущую от from к to
-    private void removeBranch(IElement from, IElement to) {
+    private void removeBranch(Element from, Element to) {
         List<Integer> indexesForRemove = new ArrayList<>();
         for (int i = 0; i < graph.size(); i++) {
             if (graph.get(i).getFromEl() == from && graph.get(i).getToEl() == to) {

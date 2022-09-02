@@ -1,22 +1,24 @@
-import Elements.IElement;
+package autorouter.core;
+
+import elements.Element;
 
 // класс, представляющий ветку графа
 public class GraphBranch {
 
-    public IElement getFromEl() {
+    public Element getFromEl() {
         return fromEl;
     }
 
-    public IElement getToEl() {
+    public Element getToEl() {
         return toEl;
     }
 
     // элемент-начало ветви
-    private final IElement fromEl;
+    private final Element fromEl;
     // элемент-окончание ветви
-    private final IElement toEl;
+    private final Element toEl;
 
-    public GraphBranch(IElement fromEl, IElement toEl) {
+    public GraphBranch(Element fromEl, Element toEl) {
         this.fromEl = fromEl;
         this.toEl = toEl;
     }

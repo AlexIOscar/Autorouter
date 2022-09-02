@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="DStV tasks">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../../USERDIR/common/DStV tasks/out/artifacts/DStV_tasks_jar/DStV tasks.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../USERDIR/common/DStV tasks/out/artifacts/DStV_tasks_jar/LabSolver.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

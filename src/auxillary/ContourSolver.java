@@ -1,7 +1,7 @@
-package Auxillary;
+package auxillary;
 
-import Elements.Contour;
-import CutCounterPkg.*;
+import elements.Contour;
+import cutcounterpkg.*;
 import Plasm.PlasmPoint;
 
 import java.util.*;
@@ -43,8 +43,8 @@ public class ContourSolver {
                 lineList.add(new Line(ccPList.get(i), ccPList.get(i + 1)));
                 //System.out.println(i);
             }
-        } catch (WrongLineExeption wle) {
-            wle.printDegPtErr();
+        } catch (WrongLineException wle) {
+            wle.printStackTrace();
         }
 
         List<Double> angleList = new ArrayList<>();

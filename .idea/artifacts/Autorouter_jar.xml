@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Autorouter:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Autorouter_jar</output-path>
+    <root id="archive" name="Autorouter.jar">
+      <element id="module-output" name="Autorouter" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../USERDIR/common/CutCounter/out/artifacts/CutCounter_jar/CutCounter.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../USERDIR/common/DStV tasks/out/artifacts/DStV_tasks_jar/LabSolver.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
